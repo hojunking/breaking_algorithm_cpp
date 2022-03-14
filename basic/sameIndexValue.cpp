@@ -3,7 +3,7 @@
 using namespace std;
 
 void binarySearch(int n, vector<int>& v){
-    int cnt =0, mid=0,low=0,high=n;
+    int cnt =0, mid=0,low=0,high=n-1;
     //cout << high << " " << low << "\n";
     while(low <= high){
         cnt++;
