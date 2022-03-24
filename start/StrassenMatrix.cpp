@@ -19,8 +19,9 @@ void merge(int n, matrix_t& C,matrix_t C11,matrix_t C12,matrix_t C21,matrix_t C2
 void strassen(int n, matrix_t A, matrix_t B, matrix_t& C);
 
 int main(){
-    int n;
+    int n,t;
     cin >> n >> threshold;
+    t = n;
     makeBinary(n);
     matrix_t A,B,C;
     //사이즈 설정
@@ -28,11 +29,11 @@ int main(){
     resize(n,B);
     resize(n,C);
 
-    inputMatrix(n,A);
-    inputMatrix(n,B);
+    inputMatrix(t,A);
+    inputMatrix(t,B);
     strassen(n,A,B,C);
     cout << cnt <<"\n";
-    printMatrix(n,C);
+    printMatrix(t,C);
 }
 void strassen(int n, matrix_t A, matrix_t B, matrix_t& C){
         cnt++;
@@ -58,7 +59,7 @@ void strassen(int n, matrix_t A, matrix_t B, matrix_t& C){
         partition(m,A,A11,A12,A21,A22);
         partition(m,B,B11,B12,B21,B22);
         //M1
-        madd(m, A11,A12,L);
+        madd(m, A11,A22,L);
         madd(m, B11,B22,R);
         strassen(m,L,R,M1);
         //M2
@@ -69,7 +70,7 @@ void strassen(int n, matrix_t A, matrix_t B, matrix_t& C){
         strassen(m,A11,L,M3);
         //M4
         msub(m,B21,B11,L);
-        strassen(m,L,A22,M4);
+        strassen(m,A22,L,M4); //순서 틀리면 좇된다...
         //M5
         madd(m,A11,A12,L);
         strassen(m,L,B22,M5);
@@ -107,6 +108,7 @@ void makeBinary(int& n){
 void mmult(int n,matrix_t A, matrix_t B, matrix_t& C){
     for(int i = 0; i<n;i++){
         for(int j =0; j<n; j++){
+            C[i][j] = 0;
             for(int k = 0; k <n; k++)
                 C[i][j] += A[i][k] * B[k][j];   
         }
@@ -122,13 +124,13 @@ void partition(int m,matrix_t M,
             M22[i][j] = M[i+m][j+m];
         }
 }
-void merge(int m, matrix_t& C,matrix_t C11,matrix_t C12,matrix_t C21,matrix_t C22){
+void merge(int m, matrix_t& M,matrix_t M11,matrix_t M12,matrix_t M21,matrix_t M22){
     for(int i =0; i<m; i++){
         for(int j =0; j<m; j++){
-            C[i][j] = C11[i][j];
-            C[i][j+m] = C12[i][j];
-            C[i+m][j] = C21[i][j];
-            C[i+m][j+m] = C22[i][j];
+            M[i][j] = M11[i][j];
+            M[i][j+m] = M12[i][j];
+            M[i+m][j] = M21[i][j];
+            M[i+m][j+m] = M22[i][j];
         }
     }
 }
@@ -152,13 +154,11 @@ void resize(int n, matrix_t& M){
 }
 void madd(int n, matrix_t A,matrix_t B,matrix_t& C){
      for(int i =0; i < n; i++)
-        for(int j=0; j < n; j++){
+        for(int j=0; j < n; j++)
             C[i][j] = A[i][j] + B[i][j];
-        }
 }
 void msub(int n, matrix_t A,matrix_t B,matrix_t& C){
      for(int i =0; i < n; i++)
-        for(int j=0; j < n; j++){
+        for(int j=0; j < n; j++)
             C[i][j] = A[i][j] - B[i][j];
-        }
 }
