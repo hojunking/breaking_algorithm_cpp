@@ -4,12 +4,11 @@
 using namespace std;
 
 typedef vector<int> LargeInteger;
-typedef unsigned long long longInt;
 int thredhold, cnt =0;
 
 
 void printInt(LargeInteger r);
-void make_int(longInt a, LargeInteger& u);
+void make_int(string a, LargeInteger& u);
 void remove_leading_zeros(LargeInteger& v);
 void roundup_carry(LargeInteger& v);
 void ladd(LargeInteger a, LargeInteger b,LargeInteger&c);
@@ -21,7 +20,7 @@ void prod(LargeInteger u, LargeInteger v, LargeInteger& r);
 
 int main(void){
     cin >> thredhold;
-    longInt a,b;
+    string a,b;
     cin >> a >> b;
     LargeInteger u,v,r;
     make_int(a,u);
@@ -32,8 +31,12 @@ int main(void){
 
 void printInt(LargeInteger r){
     cout << cnt << "\n";
-    for(int i = r.size()-1; -1 <i ; i--){
-        cout << r[i];
+    if(r.size() == 0)
+        cout << 0;
+    else{
+        for(int i = r.size()-1; -1 <i ; i--){
+            cout << r[i];
+        }
     }
 }
 
@@ -59,19 +62,15 @@ void prod(LargeInteger u, LargeInteger v, LargeInteger& r){
         power_exp(t5,m,t6); // (xz+wy)*10^m
         prod(y,z,t7); //yz
 
-        ladd(t5,t6,t8); //xw* 10^2m + (xz+wy)*10^m
-        ladd(t7,t8,r); // xw* 10^2m + (xz+wy)*10^m + yz
+        ladd(t2,t6,t8); //xw* 10^2m + (xz+wy)*10^m
+        ladd(t8,t7,r); // xw* 10^2m + (xz+wy)*10^m + yz
     }
 }
 
-void make_int(longInt a, LargeInteger& u){ //문제 없음
-    string len = to_string(a);
-    u.resize(len.size());
-    for(int i= 1; i <= u.size(); i++){
-        u[len.size()-i] = len[i-1] -'0';
-        cout <<u[len.size()-i];
-    }
-    cout << "\n";
+void make_int(string a, LargeInteger& u){ //문제 없음
+    u.resize(a.length());
+    for(int i= 1; i <= u.size(); i++)
+        u[a.length()-i] = a[i-1] -'0';
 }
 
 void roundup_carry(LargeInteger& v){
@@ -100,7 +99,7 @@ void lmult(LargeInteger a, LargeInteger b, LargeInteger& c){
     fill(c.begin(), c.end(), 0);
     for(int i=0; i<a.size(); i++)
         for(int j=0; j <b.size(); j++)
-            c[i+j] = a[i]*b[j];
+            c[i+j] += a[i]*b[j];
     roundup_carry(c);
 }
 
@@ -130,10 +129,15 @@ void rem_exp(LargeInteger u, int m, LargeInteger& v){
     }
 }
 void div_exp(LargeInteger u, int m, LargeInteger& v){
-    if(u.size() == 0)
+    if(u.size() <= 0)
         v.resize(0);
     else{
-        v.resize(m);
-        copy(u.begin() + m, u.end(),v.begin());
+        if(m >= u.size())
+            v.resize(0);
+        else{
+            v.resize(u.size() - m);
+            copy(u.begin() + m, u.end(),v.begin());
+            remove_leading_zeros(v);
+        }
     }
 }
