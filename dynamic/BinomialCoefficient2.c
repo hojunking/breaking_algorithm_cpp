@@ -1,9 +1,10 @@
+// c로 구현한 이항계수 최적화
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #define min(x, y) (x) < (y) ? (x) : (y)
 
-typedef unsigned long long int LongInteger;
+typedef unsigned long long int LongInteger; //Maxsize module 계산 시 LongInteger는 필요없다...
 
 int Max;
 
