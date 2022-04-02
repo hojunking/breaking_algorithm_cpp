@@ -162,3 +162,7 @@ void msub(int n, matrix_t A,matrix_t B,matrix_t& C){
         for(int j=0; j < n; j++)
             C[i][j] = A[i][j] - B[i][j];
 }
+
+
+ W.resize(n,vector<int>(n,INF));
+    D.resize(n,vector<int>(n,0));
