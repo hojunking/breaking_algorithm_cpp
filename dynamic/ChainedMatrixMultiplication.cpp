@@ -1,19 +1,20 @@
 #include <iostream>
 #include <vector>
-#define INF 99999
+#include <string>
+#define INF 999
 using namespace std;
 typedef vector<vector<int>> matrix_t;
 
 int minimum(int i, int j, int& mink, vector<int>& d, matrix_t& M ){
     int minValue = INF, value;
     for(int k=i; k <= j-1; k++){
-        value = (M[i][k] + M[k+1][j] + d[i-1]*d[k]*d[j]) % INF;
+        value = M[i][k] + M[k+1][j] + d[i-1]*d[k]*d[j];
         if(minValue > value){
             minValue = value;
             mink = k;
         }
     }
-    return minValue;
+    return minValue; 
 }
 
 void minMult(int n, vector<int>& d, matrix_t& P, matrix_t& M){
@@ -54,7 +55,6 @@ void order(int i, int j, matrix_t& P, string& s){
     }
 }
 
-
 int main(void){
     //행렬의 개수
     int n; cin >> n;
@@ -71,7 +71,7 @@ int main(void){
     //최적값
     cout << M[1][n] <<"\n";
     string s;
-    order(1,n,P,s);
+    //order(1,n,P,s);
     cout << s;
     
 }
