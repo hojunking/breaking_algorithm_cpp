@@ -10,6 +10,7 @@
         "string_view": "cpp",
         "initializer_list": "cpp",
         "ostream": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "*.tcc": "cpp"
     }
 }
