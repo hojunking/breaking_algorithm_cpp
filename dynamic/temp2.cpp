@@ -1,4 +1,7 @@
 #include <iostream>
+#include <algorithm>
+#include <utility>
+#include <string>
 #include <vector>
 using namespace std;
 #define INF 999999
@@ -24,14 +27,15 @@ void preOrder(node_ptr node, vector<int>& pre){
 void inOrder(node_ptr node, vector<int>& in){
     if(node)
     {
-        inOrder(node->left,in);
+        preOrder(node->left,in);
         in.push_back(node->key);
-        inOrder(node->right,in);
+        preOrder(node->right,in);
     }
 }
 
 void search(node_ptr tree, int keyin, node_ptr& p){ //포인터 타입 참조
-    bool found = false;
+    bool found;
+    found = false;
     p = tree;
     while(!found){
         if(p->key == keyin)
@@ -47,11 +51,9 @@ int minimum(int i, int j, int& mink, vector<int>& p, matrix_t& A){
     int minValue = INF, value;
     for(int k =i; k <=j; k++){
         
-        int sum=0;
+        value = A[i][k-1] + A[k+1][j];
         for(int l=i; l<=j; l++)
-            sum += p[l];
-            //sum = ((p[j]+1)*p[j] -(p[i]+1)*p[i]) /2;
-        value = A[i][k-1] + A[k+1][j] + sum;
+            value += p[l];
         
         if(minValue > value){
             minValue = value;
@@ -69,7 +71,8 @@ void optSearchTree(int n, vector<int>& p, matrix_t& A, matrix_t& R){
         A[i][i-1] =0; A[i][i] = p[i];
         R[i][i-1] =0; R[i][i] =i;
     }
-    A[n+1][n] = R[n+1][n] =0;
+    A[n + 1][n] = 0;
+    R[n + 1][n] = 0;
 
     for(int diagonal =1; diagonal <= n-1; diagonal++){
         for(int i =1; i <= n - diagonal; i++){
@@ -91,13 +94,6 @@ void printMatrix(int n, matrix_t& T){
         cout << "\n";
     }
 }
-// node_ptr createNode(int k){
-//     node_ptr nNode= (node_t*)malloc(sizeof(node_t));
-//     nNode->key = k;
-//     nNode->left =NULL;
-//     nNode->right =NULL;
-//     return nNode;
-// }
 
 node_ptr tree(int i, int j, vector<int>& keys, matrix_t& R){
     int k = R[i][j];
@@ -133,15 +129,14 @@ int main(void){
     printMatrix(n,A);
     printMatrix(n,R);
 
-    cout << A[1][n] << "\n";
     node_ptr root = tree(1,n,K,R);
     vector<int> pre; //초기화시키면 push_back() 0 뒤로 붙습니다
     vector<int> in;
 
+    cout << A[1][n] << "\n";
+
     preOrder(root,pre);
-    //cout << "\n";
     inOrder(root,in);
-    //cout << "\n";
 
     for(int i=0; i <pre.size(); i++) //pre
         if(i == 0) cout << pre[i];
