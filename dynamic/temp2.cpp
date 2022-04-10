@@ -27,9 +27,9 @@ void preOrder(node_ptr node, vector<int>& pre){
 void inOrder(node_ptr node, vector<int>& in){
     if(node)
     {
-        preOrder(node->left,in);
+        inOrder(node->left,in);
         in.push_back(node->key);
-        preOrder(node->right,in);
+        inOrder(node->right,in);
     }
 }
 
