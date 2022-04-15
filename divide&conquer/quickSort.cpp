@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
+/*
+    divide & conquer - quick_sort
+*/
 int cnt =0;
 int partition(vector<int>& S, int low, int high){
     cnt++;
