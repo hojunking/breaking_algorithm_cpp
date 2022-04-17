@@ -18,6 +18,7 @@ void div_exp(LargeInteger u, int m, LargeInteger& v);
 void rem_exp(LargeInteger u, int m, LargeInteger& v);
 void prod(LargeInteger u, LargeInteger v, LargeInteger& r);
 
+
 int main(void){
     cin >> thredhold;
     string a,b;
@@ -41,7 +42,7 @@ void printInt(LargeInteger r){
 }
 
 void prod(LargeInteger u, LargeInteger v, LargeInteger& r){
-    cnt++;
+    cnt++; // 재귀호출이 4->3
     LargeInteger x,y,w,z;
     LargeInteger t1,t2,t3,t4,t5,t6,t7,t8;
     int n = max(u.size(), v.size());

@@ -18,9 +18,9 @@ void floyd2(int n, matrix_t& W, matrix_t& D, matrix_t& P){
     for(int k =1; k <= n; k++)
         for(int i=1; i<=n; i++)
             for(int j =1; j<=n; j++)
-                if(D[i][j] > D[i][k] + D[k][j]){
-                    D[i][j] = D[i][k] + D[k][j];
-                    P[i][j] =k;
+                if(D[i][j] > D[i][k] + D[k][j]){ //direct가 더 크다면 거쳐서
+                    D[i][j] = D[i][k] + D[k][j]; //그 길이를 D에 저장
+                    P[i][j] =k; //tracking용
                 }
 }
 
