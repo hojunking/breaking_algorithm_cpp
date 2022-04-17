@@ -14,7 +14,7 @@ int minimum(int i, int j, int& mink, vector<int>& d, matrix_t& M ){
             mink = k;
         }
     }
-    return minValue; 
+     return minValue; 
 }
 
 void minMult(int n, vector<int>& d, matrix_t& P, matrix_t& M){
@@ -71,7 +71,7 @@ int main(void){
     //최적값
     cout << M[1][n] <<"\n";
     string s;
-    //order(1,n,P,s);
+    order(1,n,P,s);
     cout << s;
     
 }

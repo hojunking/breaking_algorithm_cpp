@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-int cnt =0;
+int cnt =0,cnt2=0;
 
 void merge(vector<int>& S, int low, int mid, int high){
     cnt++;
@@ -23,6 +23,7 @@ void merge(vector<int>& S, int low, int mid, int high){
 }
 
 void mergeSort(vector<int>& S, int left, int right){
+    cnt2++;
     if(left < right){
         int mid = (left + right) /2;
         mergeSort(S,left, mid);
@@ -39,7 +40,7 @@ int main(void){
         cin >> S[i];
     }
     mergeSort(S,0,n-1);
-    cout << cnt << "\n";
+    cout << cnt2 << " " << cnt << "\n";
     for(int it : S)
         cout << it <<" ";
 }
