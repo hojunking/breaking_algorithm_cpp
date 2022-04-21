@@ -1,4 +1,6 @@
 #include <iostream>
+
+//마술의 탑
 using namespace std;
 int main() {
     int num;
