@@ -34,7 +34,6 @@ vector<int> dijkstra(int n, matrix_t& W, set_of_edges& F){
             cout << touch[k] << "\n";
         }
 
-       
         F.push_back(make_pair(touch[vnear], vnear));
 
         for (int i=2; i<=n; i++){ //최단거리를 전부 갱신시켜준다.
@@ -46,23 +45,10 @@ vector<int> dijkstra(int n, matrix_t& W, set_of_edges& F){
         length[vnear]= -1; //다음 단계로 갈 때 가장 작은 edge weight -1로 만든다.
 
     }
-    //touch print
-    for(int k =2; k < n+1; k++){
-        if(k <n)
-        cout << touch[k] << " ";
-        else
-        cout << touch[k] << "\n";
-    }
-    
-    //print F - edges
-    for(int i=0; i<n-1; i++)
-        cout << F[i].first << " " << F[i].second << " " << W[F[i].first][F[i].second] <<"\n";
-
-
     return touch;
 }
 
-void printPath(int k,vector<int> touch){ //retracking print path(recursive)
+void printPath(int k,vector<int> touch){ //retracking print path
     int i =k;
     if(touch[k] == 1){
         cout << touch[k] << " " << k;
@@ -74,21 +60,6 @@ void printPath(int k,vector<int> touch){ //retracking print path(recursive)
         cout << " " << i;
     }
 }
-
-void printPath2(int k, vector<int> touch){ //retracking print
-    vector<int> t;
-    while(k != 1){
-        t.push_back(k);
-        k = touch[k];
-    }
-    t.push_back(k);
-    for(int m = t.size()-1; 0 <=m; m--){
-        if(m == t.size()-1)
-        cout << t[m];
-        else
-        cout << " " <<t[m];
-    }
-}   
 
 int main(void){
     int m,n,u,v,w;
@@ -112,6 +83,10 @@ int main(void){
 
     vector<int> touch(n+1);
     touch = dijkstra(n,W,F);
+    
+    //print F - edges
+    for(int i=0; i<n-1; i++)
+        cout << F[i].first << " " << F[i].second << " " << W[F[i].first][F[i].second] <<"\n";
 
     for(int i =0; i<input.size(); i++){
         printPath(input[i],touch);
