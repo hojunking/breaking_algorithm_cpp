@@ -55,7 +55,7 @@ typedef priority_queue<link, vector<link>, compare> PriorityQueue;
 void preorder(link root){
     if(root !=NULL){
         cout << root->symbol << ":" << root->frequency << " "; 
-        preorder(root->left);
+        preorder(root->left);n 
         preorder(root->right);
     }
     return;
