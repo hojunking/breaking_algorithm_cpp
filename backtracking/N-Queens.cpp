@@ -1,18 +1,15 @@
 #include <iostream>
 #include <vector>
+#include <utility>
+#include <string>
 using namespace std;
 
-int n; int cnt =0;
-vector<int> col(n+1,0);
 
-void printHigh(){
-    cnt++;
-    for (int j = 1; j <= n; j++)
-        if (j < n)
-            cout << col[j];
-        else 
-            cout << col[j] << "\n";
-}
+
+int n,p =0;
+vector<int> col;
+vector<string> M;
+typedef unsigned long long LONG;
 
 bool promising(int i){
     int k =1;
@@ -31,8 +28,15 @@ bool promising(int i){
 void queens(int i){
     int j;
     if(promising(i)){
-        if(i == n)
-            printHigh();
+        if(i == n){
+            p++;
+            string tmp ="";
+            for (int u = 1; u <= n; u++)
+                tmp += to_string(col[u]);
+                
+           // cout << tmp << "\n";
+           M.push_back(tmp);
+        }
         else{
             for(j =1; j <=n; j++){
                 col[i+1] = j;
@@ -43,6 +47,15 @@ void queens(int i){
 }
 int main(void){
     cin >> n;
+    col.resize(n+1,0);
+
     queens(0);
-    cout << cnt;
+    cout << p <<"\n";
+    LONG max =0;
+    for(int i=0; i<p; i++){
+        LONG tmp = stoull(M[i]);
+        if(tmp > max)
+            max = tmp;
+    }
+    cout << max << "\n";
 }
