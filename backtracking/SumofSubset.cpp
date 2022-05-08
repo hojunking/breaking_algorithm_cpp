@@ -32,25 +32,20 @@ void printSets(void){
 
 void printSets2(){
     for(int i =1; i<k+1; i++){
+        int p =0;
         for(int j=1; j<n+1; j++){
-            if(sets2[i][j] == 1)
-                cout << w[j] << (j < n ? " ": "\n");
-            else cout << (j < n ? "": "\n");
             
-            
-            if(sets2[i][j] == 1)
-                if(j < n)
-                    cout << w[j] << (j < n ? " ";
-                else 
-                    cout << w[j] << (j < n ? "\n";
-            else
-                if(j < n)
-                    cout << "";
-                else 
-                    cout << "\n";
-                
-                
+            // if(sets2[i][j] == 1)
+            //     cout << w[j] << (j < n ? " ": "\n");
+            // else cout << (j < n ? "": "\n");
+            if(sets2[i][j] == 1){
+                //cout << (j ==1 ? "": " ") << w[j];
+                p++;
+                cout << (p ==1 ? "": " ") << w[j];
+            }
         }
+        cout << "\n";
+        p =0;
     }
 }
 
@@ -67,7 +62,6 @@ void sum_of_subsets(int i, int weight, int total){
             sets2.resize(k+1);
             sets2[k].resize(n+1);
             copy(include.begin(), include.end(), sets2[k].begin());
-
             // for(int j=1; j<n+1; j++)
             //     cout << sets2[k][j] << (j < n ? " ": "\n");
         }
