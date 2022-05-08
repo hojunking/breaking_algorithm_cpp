@@ -5,7 +5,7 @@
 using namespace std;
 
 
-int n,m,k;
+int n,m,k,cnt;
 vector<vector<int>> W;
 vector<int> vcolor;
 
@@ -17,7 +17,6 @@ bool promising(int i){
             flag =false;
         j++;
     }
-    if(flag) m++;
     return flag;
 }
 
@@ -26,11 +25,10 @@ void m_coloring(int i){
 
     if(promising(i)){
         if(i == n){
-            m =1;
-            for(int j =1; j<n+1; j++)
-                cout << vcolor[j] << " ";
-            cout << "\n";
-            
+            // for(int j =1; j<n+1; j++)
+            //     cout << vcolor[j] << " ";
+            // cout << "\n";
+            cnt++;
         }
         else {
             for(color =1; color <= m; color++){
@@ -51,7 +49,12 @@ int main(){
         cin >> v >> e;
         W[v][e] = W[e][v] = 1;
     }
-    m=3;
-    m_coloring(0);
+
+    m =0;
+    while(cnt == 0){
+        m++;
+        m_coloring(0);
+    }
+    cout << m << "\n" << cnt;
     return 0;
 }
