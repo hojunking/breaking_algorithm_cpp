@@ -1,73 +1,75 @@
 #include <iostream>
 #include <vector>
-
 using namespace std;
-int W, cnt = 0;
-vector<int> include, w;// include 배열은 w 배열의 원소를 넣었냐 안넣었냐
 
-bool promising(int i, int weight, int total) {
-   return (weight + total >= W) && (weight == W || weight + w[i + 1] <= W);
+int n, W, numbest, maxprofit;
+vector<int> w, p, include, bestset;
+
+int bound(int i, int profit, int weight)
+{
+    if (weight >= W)
+        return 0;
+    else {
+        int result = profit;
+        int j = i + 1;
+        int totweight = weight;
+        while (j <= n && totweight + w[j] <= W) {
+            totweight += w[j];
+            result += p[j];
+            j++;
+        }
+        int k = j;
+        if (k <= n)
+            result += (W - totweight) * p[k] / w[k]; 
+        return result;
+    }
 }
 
-void sum_of_subsets_for_cnt(int i, int weight, int total) {
-   if (promising(i, weight, total)) {
-      if (weight == W)
-         cnt++;
-      else {
-         include[i + 1] = true;
-         sum_of_subsets_for_cnt(i + 1, weight + w[i + 1], total - w[i + 1]);
-         include[i + 1] = false;
-         sum_of_subsets_for_cnt(i + 1, weight, total - w[i + 1]);
-      }
-   }
+bool promising(int i, int profit, int weight)
+{
+    return bound(i, profit, weight) > maxprofit;
 }
 
-void sum_of_subsets(int i, int weight, int total) {
-   if (promising(i, weight, total)) {
-      if (weight == W) {
-         int f_cnt = 0;// 출력형식
+void knapsack(int i, int profit, int weight)
+{
+    if (weight <= W && profit > maxprofit) {
+        maxprofit = profit;
+        numbest = i;
+        // bestset = include; deepcopy include to bestset.
+        bestset.resize(include.size());
+        copy(include.begin(), include.end(), bestset.begin());
+    }
 
-         for (int i = 1; i < include.size(); i++) {
-            if (include[i] == 1) {
-               f_cnt++;
-               if (f_cnt == 1)
-                  cout << w[i];
-               else
-                  cout << " " << w[i];
-            }
-         }
-         cout << endl;
-
-      }
-      else {
-         include[i + 1] = true;
-         sum_of_subsets(i + 1, weight + w[i + 1], total - w[i + 1]);
-         include[i + 1] = false;
-         sum_of_subsets(i + 1, weight, total - w[i + 1]);
-      }
-   }
+    if (i <= n && promising(i, profit, weight)) {
+        include[i + 1] = 1;
+        knapsack(i + 1, profit + p[i + 1], weight + w[i + 1]);
+        include[i + 1] = 0;
+        knapsack(i + 1, profit, weight);
+    }
 }
 
-int main() {
-   int n, weight = 0, total = 0;
-   cin >> n >> W;
-   include.resize(n + 1, 0);
-   w.push_back(0);
+int main() 
+{
+    cin >> n;
+    w.resize(n + 1);
+    for (int i = 1; i <= n; i++)
+        cin >> w[i];
+    p.resize(n + 1);
+    for (int i = 1; i <= n; i++)
+        cin >> p[i];
 
-   for (int i = 0; i < n; i++) {
-      int temp;
-      cin >> temp;
-      total += temp;
-      w.push_back(temp);
-   }
-   sum_of_subsets_for_cnt(0, 0, total);
-   if (cnt == 0)
-   {
-      cout << cnt << endl;
-      return 0;
-   }
-   else
-      cout << cnt << endl;
-   sum_of_subsets(0, 0, total);
-
+    int T;
+    cin >> T;
+    while (T-- > 0) {
+        cin >> W;
+        numbest = maxprofit = 0;
+        include.resize(n + 1, 0);
+        knapsack(0, 0, 0);
+        cout << maxprofit << endl;
+        for (int j = 1; j <= numbest; j++)
+            if (j != numbest)
+                cout << bestset[j] << " ";
+            else 
+                cout << bestset[j] << endl;
+    }
 }
