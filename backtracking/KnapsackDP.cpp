@@ -10,7 +10,7 @@ void bubble_sort(vector<int>& t,vector<int> &c, int n){
     
     for(int i=n; 1 <i; i--)
         for(int j=1; j<i; j++)
-            if(t[j+1]/c[j+1] > t[j]/c[j]){
+            if((double)t[j+1]/c[j+1] > (double)t[j]/c[j]){
                 swap(t[j+1], t[j]);
                 swap(c[j+1], c[j]);
             }
@@ -36,7 +36,7 @@ int knapsack3(int n,int W, vector<int>& w, vector<int>& p, MAP &P){
     P[make_pair(n,W)] = (w[n] > W) ? lvalue : max(lvalue, p[n] + rvalue);
     //cout << n << " " << W << " " << P[make_pair(n,W)] << "\n";
     return P[make_pair(n,W)];
-}
+} 
 
 
 
@@ -68,29 +68,22 @@ int main(){
     for(int i=1; i<=T; i++) //backpark weight
         cin >> W[i];
 
-    MAP P;
-    
-    for(int i=0; i<=n; i++)
-        P[make_pair(i,0)] =0;
-    for(int j=0; j<=W[1]; j++)
-        P[make_pair(0,j)] =0;
+    int k =0;
+    while(k < T){
+        MAP P;
+        k++;
+        for(int i=0; i<=n; i++)
+            P[make_pair(i,0)] =0;
+        for(int j=0; j<=W[k]; j++)
+            P[make_pair(0,j)] =0;
 
-    cout << P[make_pair(1,0)] << "\n";
+        int maxProfit = knapsack3(n,W[k],w,p,P);
+        cout << maxProfit <<"\n";
 
-    int maxProfit = knapsack3(n,W[1],w,p,P);
-    cout << maxProfit <<"\n";
-
-    for(int i=1; i<=n; i++)
-        for(int j=1; j<=W[1]; j++)
-            if(P[make_pair(i,j)] != 0)
-                cout << i << " " << j << " " << P[make_pair(i,j)] << "\n";
-    // while(n != 0){
-    //     if(P[make_pair(n,W[1])] != P[make_pair(n-1,W[1])]){
-    //         cout << n << " " << w[n] << " " << p[n] << "\n";
-    //         W[1] = W[1]-w[n];
-    //     }
-    //     n--;
-    // }
-    
+        MAP::iterator it;
+        for (it = P.begin(); it != P.end(); it++)
+            if(it->first.first != 0 && it->first.second !=0)
+                cout << it->first.first << " " << it->first.second << " " << it->second << "\n";
+    }
     return 0;
 }
