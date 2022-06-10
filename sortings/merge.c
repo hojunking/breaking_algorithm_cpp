@@ -1,7 +1,6 @@
 #include <stdio.h>
 #define MAX 10
 #define SWAP(x,y,t) (t=x, x=y, y=t)
-
 /*
     O(nlog n) time complexity
 */

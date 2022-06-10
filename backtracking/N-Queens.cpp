@@ -4,8 +4,6 @@
 #include <string>
 using namespace std;
 
-
-
 int n,p =0;
 vector<int> col;
 vector<string> M;
@@ -22,8 +20,6 @@ bool promising(int i){
     }
     return flag;
 }
-
-
 
 void queens(int i){
     int j;
