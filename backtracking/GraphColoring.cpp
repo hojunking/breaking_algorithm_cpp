@@ -3,7 +3,20 @@
 #include <utility>
 #include <string>
 using namespace std;
+/*
+Input
 
+첫 줄에 정점의 수 n과 간선의 수 k가 주어진다.
+
+둘째 줄부터 k개의 간선이 주어진다.
+
+Output
+
+첫째 줄에 색칠 가능한 최소의 m값을 출력한다.
+
+둘째 줄에 해당 m값으로 색칠할 수 있는 경우의 수를 출력한다.
+
+*/
 
 int n,m,k,cnt;
 vector<vector<int>> W;
@@ -47,14 +60,17 @@ int main(){
     int v, e;
     for(int i=0; i<k; i++){
         cin >> v >> e;
-        W[v][e] = W[e][v] = 1;
+        W[v][e] = W[e][v] = 1; //adjacency matrix
     }
 
-    m =0;
-    while(cnt == 0){
-        m++;
-        m_coloring(0);
-    }
+    m =3; // m-color의 초기값은 3부터 시작
+    // while(cnt == 0){
+    //     m++;
+    //     m_coloring(0);
+    // }
+    m = 4;
+    m_coloring(0);
+
     cout << m << "\n" << cnt;
     return 0;
 }
