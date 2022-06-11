@@ -34,7 +34,6 @@ void printSets2(){
     for(int i =1; i<k+1; i++){
         int p =0;
         for(int j=1; j<n+1; j++){
-            
             // if(sets2[i][j] == 1)
             //     cout << w[j] << (j < n ? " ": "\n");
             // else cout << (j < n ? "": "\n");
